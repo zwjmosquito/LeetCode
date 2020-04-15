@@ -1,5 +1,9 @@
 class Solution:
     def getSkyline(self, buildings):
+        """
+        Idea is maintain a priority queue on the current height, each time when seeing a new start point, push it to the queue. Otherwise, remove from the queue. If the push or remove operations has changed the highest height, then it will be a critical point that we want to record
+        Note: some edge cases on same x, same y, and 'b', 'e' on the same x etc. that's why the xyf need to be specially sorted 
+        """
         import heapq
         
         if not buildings:
@@ -24,14 +28,17 @@ class Solution:
                 if y == cur_min:
                     heapq.heappop(hp)
                     if y != hp[0]:
+                        # if is for special case hp has two max values
                         res.append([x, -hp[0]])
                 else:
                     hp.remove(y)
+                    # here is where the improvement can be done
                     heapq.heapify(hp)
         return res
 
 solution = Solution()
-print(solution.getSkyline([[6765,184288,53874],[13769,607194,451649],[43325,568099,982005],[47356,933141,123943],[59810,561434,119381],[75382,594625,738524],[111895,617442,587304],[143767,869128,471633],[195676,285251,107127],[218793,772827,229219],[316837,802148,899966],[329669,790525,416754],[364886,882642,535852],[368825,651379,6209],[382318,992082,300642],[397203,478094,436894],[436174,442141,612149],[502967,704582,918199],[503084,561197,625737],[533311,958802,705998],[565945,674881,149834],[615397,704261,746064],[624917,909316,831007],[788731,924868,633726],[791965,912123,438310]]))
+testcase = []
+print(solution.getSkyline(testcase))
                 
                     
             
