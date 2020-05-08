@@ -14,4 +14,35 @@ class Solution:
 
         return max(len(tasks), (max_count - 1)*(n + 1) + max_count_tasks)
         
-            
+
+        # Second Method 
+        from collections import Counter
+        from heapq import heappush, heappop
+        # use a heap to store frequency of left letters
+        # python has min heap - use negative
+        counter = Counter(tasks)
+        heap = []
+        for k, v in counter.items():
+            heappush(heap, (-v, k))
+        
+        cur_time = 0
+        while heap:
+            temp = {}
+            for i in range(n+1):
+                cur_time += 1
+                # pop
+                if heap:
+                    v, k = heappop(heap)
+                    # if only one left
+                    if v != -1:
+                        temp[k] = v + 1
+                if not heap and not temp:
+                    break
+
+            for k, v in temp.items():
+                heappush(heap, (v, k))
+                
+
+        return cur_time
+        
+                
