@@ -25,9 +25,12 @@ class Solution:
             else:
                 right_max = max(node.val, node_max(node.right) + node.val)
 
+            # the cur_max can be updatef for including both left and right
             self.cur_max = max(self.cur_max, left_max, right_max, 
                                left_max + right_max - node.val)
             
+            # but only return max of left_max and right_max, because only these two values are able to
+            # extended to higher level
             return max(left_max, right_max)
 
         _ = node_max(root)
